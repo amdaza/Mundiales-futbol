@@ -20,6 +20,7 @@ parserTeams(I1):-
 	insert_team(CS, AS, DS);
 	true.
 	
+
 parserEvents(Team, Match, Event).-	
 	json_to_prolog(Event,PrologIn),	
     PrologIn = json(L),
@@ -40,7 +41,20 @@ parserMatches(I1):-
 	test(A2=A22) = test(LOCATION),
 	test(A4=A44) = test(SATATUS),
 	test(A5=A55) = test(WINNER),
-	insert_match(A12, A22,A44,hui,iii,3,2,ooo);
+	test(A6=A66) = test(HOMETEAM),  
+	test(A9=A99) = test(AWAYTEAM), 
+	
+	A66 = json(L1),	
+	[COUNTRY,CODE,GOALS] = L1,	
+	test(A7=A77) = test(GOALS),
+	test(A8=A88) = test(CODE),
+
+	A99 = json(L2),	
+	[COUNTRY1,CODE1,GOALS1] = L2,	
+	test(A91=A101) = test(GOALS1),
+	test(A10=A100) = test(CODE1),
+	
+	insert_match(A12, A22,A44,A88,A100,A77,A101,A55);
 	true.
 	
 
