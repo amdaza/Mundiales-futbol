@@ -5,7 +5,7 @@
 :- use_module(library('http/http_open')).
 
 :- consult(funciones).
-
+:- encoding(utf8).
 	
 parserTeams(I1):-
 	json_to_prolog(I1,PrologIn),	
@@ -28,13 +28,30 @@ parserEvent(Team, Match, Event):-
 	test(A2=Type) = test(TYPE),
 	test(A4=Player) = test(PLAYER),
 	test(A5=Time) = test(TIME),
-	insert_event(IdEvent,Match,Type,Player,Time,Team);
+	write('eventito'),
+	write(IdEvent),
+	write('Match'),
+	write(Match),
+	write('type'),
+	write(Type),
+	write('Type'),
+	write(IdEvent),
+	write('Player'),
+	write(Player),
+	write('Time'),
+	write(Time),
+	write('Team'),
+	write(Team),
+	atom_number(Time,TimeNumber),
+	insert_event(IdEvent,Match,Type,Player,TimeNumber,Team);
 	true.
 	
 parserEvents(HomeCode, MatchId,[]).	
 parserEvents(HomeCode, MatchId, [Event | Rest]):-
-	parserEvent(Team, Match, Event),
-	parserEvents(Team, Match, Rest).
+	write('holw'),
+	write(MatchId),
+	parserEvent(HomeCode, MatchId, Event),
+	parserEvents(HomeCode, MatchId, Rest).
 	
 parserMatches(I1):-
 	json_to_prolog(I1,PrologIn),	
@@ -47,14 +64,14 @@ parserMatches(I1):-
 	test(A5=A55) = test(WINNER),
 	test(A6=A66) = test(HOMETEAM),  
 	test(A9=A99) = test(AWAYTEAM), 
-	test(A7=HomeEvents) = test(HOMEEVENTS),  
-	test(A8=AwayEvents) = test(AWAYEVENTS), 
+	test(A10=HomeEvents) = test(HOMEEVENTS),  
+	test(A11=AwayEvents) = test(AWAYEVENTS), 
 	
 	A66 = json(L1),	
 	[COUNTRY,CODE,GOALS] = L1,	
 	test(A7=A77) = test(GOALS),
 	test(A8=HomeCode) = test(CODE),
-
+	write(MatchId),
 	parserEvents(HomeCode, MatchId, HomeEvents);
 	
 	A99 = json(L2),	

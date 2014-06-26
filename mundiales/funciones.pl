@@ -6,7 +6,8 @@ mundiales_connect:-
 				password(''),
 				alias(mundiales),
 				open(once)
-				]).
+				]),
+	odbc_set_connection(mundiales,encoding(utf8) ).
 
 mundiales_disconnect:- 
 	odbc_disconnect('mundiales').
