@@ -19,12 +19,12 @@ insert_team(Fifa_code, Country, Group_id) :-
 	odbc_execute(Qid, [Fifa_code, Country, Group_id], row(Fifa_code, Country, Group_id)),
 	odbc_free_statement(Qid).
 	
-insert_matches(Match_number, Location, Datetime,Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner) :-
+insert_match(Match_number, Location, Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner) :-
 	odbc_prepare('mundiales',
-		     'INSERT INTO matches (match_number, location, datetime,status,home_team,away_team,goal_home,goal_away,winner) VALUES (?,?,?,?,?,?,?,?,?)',
-		     [ integer,varchar,date,varchar,varchar,varchar,integer,integer,varchar],
+		     'INSERT INTO matches (match_number, location,status,home_team,away_team,goal_home,goal_away,winner) VALUES (?,?,?,?,?,?,?,?)',
+		     [ integer,varchar,varchar,varchar,varchar,integer,integer,varchar],
 		     Qid),
-	odbc_execute(Qid, [Match_number, Location, Datetime,Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner], row(Match_number, Location, Datetime,Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner)),
+	odbc_execute(Qid, [Match_number, Location, Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner], row(Match_number, Location, Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner)),
 	odbc_free_statement(Qid).
 	
 	

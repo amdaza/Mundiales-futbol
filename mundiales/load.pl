@@ -18,7 +18,7 @@ parserTeams(I1):-
 	test(DP=DS) = test(D),
 	
 	insert_team(CS, AS, DS);
-	test(DP=DS) = test(D).
+	true.
 	
 parserResults(I1):-
 	json_to_prolog(I1,PrologIn),	
@@ -27,12 +27,10 @@ parserResults(I1):-
 	[NUMBER,LOCATION,DATE,SATATUS,HOMETEAM,AWAYTEAM,WINNER | A] = L,
     test(A1=A12) = test(NUMBER),
 	test(A2=A22) = test(LOCATION),
-	test(A3=A33) = test(DATE),
 	test(A4=A44) = test(SATATUS),
 	test(A5=A55) = test(WINNER),
-	%insert_matches(A12, A22, A33,A44,'ARG','ALG',3,2,'ARG'),
-	write(A1),
-	write(A22).
+	insert_match(A12, A22,A44,hui,iii,3,2,ooo);
+	true.
 	
 
 loadTeams :-
@@ -44,7 +42,7 @@ loadTeams :-
 	
 a :-
 	mundiales_connect,
-    http_get('http://worldcup.sfg.io/teams/results', JsonIn, []),
+    http_get('http://worldcup.sfg.io/matches', JsonIn, []),
 	
 	 maplist(parserResults, JsonIn),
 	mundiales_disconnect.
