@@ -20,11 +20,22 @@ parserTeams(I1):-
 	insert_team(CS, AS, DS);
 	true.
 	
-parserResults(I1):-
+parserEvents(Team, Match, Event).-	
+	json_to_prolog(Event,PrologIn),	
+    PrologIn = json(L),
+	[IDEVENT,TYPE,PLAYER,TIME] = L,
+	test(A1=IdEvent) = test(IDEVENT),
+	test(A2=Type) = test(TYPE),
+	test(A4=Player) = test(PLAYER),
+	test(A5=Time) = test(TIME),
+	insert_event(IdEvent,Match,Type,Player,Time,Team);
+	true.
+	
+parserMatches(I1):-
 	json_to_prolog(I1,PrologIn),	
     PrologIn = json(L),
 	
-	[NUMBER,LOCATION,DATE,SATATUS,HOMETEAM,AWAYTEAM,WINNER | A] = L,
+	[NUMBER,LOCATION,DATE,SATATUS,HOMETEAM,AWAYTEAM,WINNER,HOMEEVENTS,AWAYEVENTS] = L,
     test(A1=A12) = test(NUMBER),
 	test(A2=A22) = test(LOCATION),
 	test(A4=A44) = test(SATATUS),
@@ -40,9 +51,9 @@ loadTeams :-
 	 maplist(parserTeams, JsonIn),
 	mundiales_disconnect.
 	
-a :-
+loadMatches :-
 	mundiales_connect,
     http_get('http://worldcup.sfg.io/matches', JsonIn, []),
 	
-	 maplist(parserResults, JsonIn),
+	 maplist(parserMatches, JsonIn),
 	mundiales_disconnect.
