@@ -4,7 +4,7 @@
 :- use_module(library('http/http_client')).
 :- use_module(library('http/http_open')).
 
-:- consult(funciones).
+:- consult(functions).
 :- encoding(utf8).
 	
 parserTeams(I1):-
@@ -55,7 +55,6 @@ parserMatches(I1):-
 	[COUNTRY,CODE,GOALS] = L1,	
 	test(_=A77) = test(GOALS),
 	test(_=HomeCode) = test(CODE),
-	write(MatchId),
 	parserEvents(HomeCode, MatchId, HomeEvents),
 	
 	A99 = json(L2),	
@@ -73,12 +72,12 @@ loadTeams :-
 	mundiales_connect,
     http_get('http://worldcup.sfg.io/teams', JsonIn, []),
 	
-	 maplist(parserTeams, JsonIn),
+	maplist(parserTeams, JsonIn),
 	mundiales_disconnect.
 	
 loadMatches :-
 	mundiales_connect,
     http_get('http://worldcup.sfg.io/matches', JsonIn, []),
 	
-	 maplist(parserMatches, JsonIn),
+	maplist(parserMatches, JsonIn),
 	mundiales_disconnect.

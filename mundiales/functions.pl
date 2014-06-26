@@ -36,3 +36,13 @@ insert_event(IdEvent,Match,Type,Player,Time,Team) :-
 	odbc_execute(Qid, [IdEvent,Match,Type,Player,Time,Team], 
 	row(IdEvent,Match,Type,Player,Time,Team)),
  odbc_free_statement(Qid).
+ 
+allMatches(R) :-
+	odbc_query('mundiales',
+				'SELECT * FROM matches', 
+				R).
+ 
+ 
+ 
+ 
+ 
