@@ -27,4 +27,11 @@ insert_match(Match_number, Location, Status,Home_Team,Away_Team,Goal_Home,Goal_A
 	odbc_execute(Qid, [Match_number, Location, Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner], row(Match_number, Location, Status,Home_Team,Away_Team,Goal_Home,Goal_Away,Winner)),
 	odbc_free_statement(Qid).
 	
-	
+insert_event(IdEvent,Match,Type,Player,Time,Team) :-
+	odbc_prepare('mundiales',
+       'INSERT INTO events (id_event,match_number,type,player,time,team) VALUES (?,?,?,?,?,?)',
+       [ integer,integer,varchar,varchar,integer,varchar],
+       Qid),
+	odbc_execute(Qid, [IdEvent,Match,Type,Player,Time,Team], 
+	row(IdEvent,Match,Type,Player,Time,Team)),
+ odbc_free_statement(Qid).
