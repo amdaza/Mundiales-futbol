@@ -28,28 +28,12 @@ parserEvent(Team, Match, Event):-
 	test(A2=Type) = test(TYPE),
 	test(A4=Player) = test(PLAYER),
 	test(A5=Time) = test(TIME),
-	write('eventito'),
-	write(IdEvent),
-	write('Match'),
-	write(Match),
-	write('type'),
-	write(Type),
-	write('Type'),
-	write(IdEvent),
-	write('Player'),
-	write(Player),
-	write('Time'),
-	write(Time),
-	write('Team'),
-	write(Team),
 	atom_number(Time,TimeNumber),
 	insert_event(IdEvent,Match,Type,Player,TimeNumber,Team);
 	true.
 	
 parserEvents(HomeCode, MatchId,[]).	
 parserEvents(HomeCode, MatchId, [Event | Rest]):-
-	write('holw'),
-	write(MatchId),
 	parserEvent(HomeCode, MatchId, Event),
 	parserEvents(HomeCode, MatchId, Rest).
 	
@@ -58,28 +42,28 @@ parserMatches(I1):-
     PrologIn = json(L),
 	
 	[NUMBER,LOCATION,DATE,STATUS,HOMETEAM,AWAYTEAM,WINNER,HOMEEVENTS,AWAYEVENTS] = L,
-    test(A1=MatchId) = test(NUMBER),
-	test(A2=A22) = test(LOCATION),
-	test(A4=A44) = test(STATUS),
-	test(A5=A55) = test(WINNER),
-	test(A6=A66) = test(HOMETEAM),  
-	test(A9=A99) = test(AWAYTEAM), 
-	test(A10=HomeEvents) = test(HOMEEVENTS),  
-	test(A11=AwayEvents) = test(AWAYEVENTS), 
+    test(_=MatchId) = test(NUMBER),
+	test(_=A22) = test(LOCATION),
+	test(_=A44) = test(STATUS),
+	test(_=A55) = test(WINNER),
+	test(_=A66) = test(HOMETEAM),  
+	test(_=A99) = test(AWAYTEAM), 
+	test(_=HomeEvents) = test(HOMEEVENTS),  
+	test(_=AwayEvents) = test(AWAYEVENTS), 
 	
 	A66 = json(L1),	
 	[COUNTRY,CODE,GOALS] = L1,	
-	test(A7=A77) = test(GOALS),
-	test(A8=HomeCode) = test(CODE),
+	test(_=A77) = test(GOALS),
+	test(_=HomeCode) = test(CODE),
 	write(MatchId),
-	parserEvents(HomeCode, MatchId, HomeEvents);
+	parserEvents(HomeCode, MatchId, HomeEvents),
 	
 	A99 = json(L2),	
 	[COUNTRY1,CODE1,GOALS1] = L2,	
 	test(A91=A101) = test(GOALS1),
 	test(A10=AwayCode) = test(CODE1),
 	
-	parserEvents(AwayCode, MatchId, AwayEvents);
+	parserEvents(AwayCode, MatchId, AwayEvents),
 	
 	insert_match(MatchId, A22,A44,HomeCode,AwayCode,A77,A101,A55);
 	true.
