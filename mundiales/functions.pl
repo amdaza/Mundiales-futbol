@@ -41,8 +41,19 @@ allMatches(R) :-
 	odbc_query('mundiales',
 				'SELECT * FROM matches', 
 				R).
+				
+ 
+leading_scorer_query(R) :-
+	odbc_query('mundiales','SELECT count(*) as c, player FROM events WHERE (type="goal" or type="goal-penalty") GROUP BY player ORDER BY c desc',R).
  
  
- 
+ insert_leading_scorer(G,N):-
+	odbc_prepare('mundiales',
+       'INSERT INTO leading_scorer (goals,name) VALUES (?,?)',
+       [integer,varchar],
+       Qid),
+	odbc_execute(Qid, [G,N], 
+	row(IdEvent,Match,Type,Player,Time,Team)),
+ odbc_free_statement(Qid).
  
  
