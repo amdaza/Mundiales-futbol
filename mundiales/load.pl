@@ -28,7 +28,8 @@ parserEvent(Team, Match, Event):-
 	test(A2=Type) = test(TYPE),
 	test(A4=Player) = test(PLAYER),
 	test(A5=Time) = test(TIME),
-	atom_number(Time,TimeNumber),
+	sub_atom(TimeNumber, 0, 2, _, S),
+	atom_number(Time,S),
 	insert_event(IdEvent,Match,Type,Player,TimeNumber,Team);
 	true.
 	

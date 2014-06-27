@@ -42,6 +42,11 @@ allMatches(R) :-
 				'SELECT * FROM matches', 
 				R).
  
+ allGoals(R) :-
+	odbc_query('mundiales',
+				'SELECT * FROM events WHERE 
+				type LIKE "%goal%"', 
+				R).
  
  
  
