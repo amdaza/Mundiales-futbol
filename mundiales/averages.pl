@@ -1,15 +1,17 @@
 :- consult(calculate).
 
-%Averages		  
+%Averages	
 
 sum_goals([],0).		  
-sum_goals([RowList|Others], Sum):-
-write(RowList),
-	RowList = row(_,_,_,_,_,GoalHome,GoalAway,_),
-	
-	Sum is Sum + GoalHome,
-	Sum is Sum + GoalAway,
-	sum_goals(Others,Sum).
+sum_goals([RowList|Others], Sum1):-
+	write(RowList),
+	RowList = row(A,B,C,D,E,GoalHome,GoalAway,F),
+	write(GoalHome),
+	write(GoalAway),
+	Sum2 is GoalAway + GoalHome,
+	write(Sum2),
+	Sum3 is Sum1 + Sum2,
+	sum_goals(Others,Sum3).
 	
 sum_times_goals([],0).		  
 sum_times_goals([RowList|Others], Sum):-
